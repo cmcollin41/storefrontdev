@@ -79,24 +79,24 @@ export default async function PostPage({
           />
         </div>
       )}
-      <h1 className="text-4xl font-bold mb-2">{post.title}</h1>
-      {post.author && (
-        <div className="flex items-center mb-4">
-          {post.author.image && (
-            <Image
-              src={urlFor(post.author.image).width(40).height(40).url()}
-              alt={post.author.name}
-              width={40}
-              height={40}
-              className="rounded-full mr-2"
-            />
-          )}
-          <span className="text-gray-600 font-sans">By {post.author.name}</span>
-        </div>
-      )}
-      <p className="text-gray-600 mb-8">
-        Published: {new Date(post.publishedAt).toLocaleDateString()}
-      </p>
+      <h1 className="text-4xl font-bold">{post.title}</h1>
+      <div className="flex justify-between items-center">
+        {post.author && (
+          <div className="flex items-center">
+            {post.author.image && (
+              <Image
+                src={urlFor(post.author.image).width(40).height(40).url()}
+                alt={post.author.name}
+                width={40}
+                height={40}
+                className="rounded-full mr-2"
+              />
+            )}
+            <span className="text-gray-600 font-sans">By {post.author.name}</span>
+          </div>
+        )}
+        <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
+      </div>
       <div className="prose max-w-none">
         {post.body && <PortableText value={post.body} components={components} />}
       </div>
