@@ -71,7 +71,7 @@ export default function Navigation() {
 
   return (
     <nav className="w-full border-b border-gray-50">
-      <div className="mx-auto px-3">
+      <div className="max-w-7xl mx-auto px-3">
         <div className="flex items-center justify-between py-2">
           {/* Left side - Logo */}
           <div className="w-[300px] flex items-center">

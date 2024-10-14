@@ -5,10 +5,7 @@ export default function Home() {
   return (
     <div className="max-w-7xl mx-auto px-3 py-16 font-geist">
       <div className="flex items-center justify-between">
-        <h1 className="text-4xl font-bold">storefront.dev</h1>
-        <a href="https://www.youtube.com/@storefront" target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-red-600 text-white font-semibold rounded-sm hover:bg-red-700 transition duration-300">
-          Visit our YouTube
-        </a>
+        <h1 className="text-4xl font-bold">Modern E-Commerce</h1>
       </div>
       <p className="text-lg max-w-lg mt-4 font-light">
         We build modern, high-performance, and scalable e-commerce stores and then share what we learn along the way.
