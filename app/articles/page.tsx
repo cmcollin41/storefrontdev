@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from "next/link";
 import Image from "next/image";
-import { type SanityDocument } from "next-sanity";
+import { type SanityDocument } from "@sanity/types";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { client } from "@/sanity/lib/client";
@@ -16,7 +16,7 @@ function urlFor(source: any) {
 }
 
 export default function NewsPage() {
-  const [posts, setPosts] = useState<SanityDocument[]>([]);
+  const [posts, setPosts] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -71,17 +71,17 @@ export default function NewsPage() {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold text-green-900 mb-8">Articles</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {posts.map((post) => (
+        {posts.map((post: any) => (
           <article key={post._id} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
             {post.mainImage && (
               <div className="relative h-48 w-full">
                 <Image
-                  src={urlFor(post.mainImage).width(800).height(400).url()}
+                  src={urlFor(post.mainImage).width(800).height(400).url() || ''}
                   alt={post.title}
                   fill
                   style={{ objectFit: 'cover' }}
                   placeholder="blur"
-                  blurDataURL={urlFor(post.mainImage).width(50).quality(20).blur(50).url()}
+                  blurDataURL={urlFor(post.mainImage).width(50).quality(20).blur(50).url() as string}
                 />
               </div>
             )}
@@ -89,9 +89,17 @@ export default function NewsPage() {
               <Link href={`/articles/${post.slug.current}`}>
                 <h2 className="text-xl font-semibold mb-2 hover:text-green-700 transition-colors">{post.title}</h2>
               </Link>
-              <p className="text-gray-600 text-sm mb-3">{new Date(post.publishedAt).toLocaleDateString()}</p>
-              {post.excerpt && <p className="text-gray-700 line-clamp-3 mb-4">{post.excerpt}</p>}
-              <Link href={`/articles/${post.slug.current}`} className="mt-auto text-green-600 hover:underline">
+              <p className="text-gray-600 text-sm mb-3">
+                {post.publishedAt instanceof Date
+                  ? post.publishedAt.toLocaleDateString()
+                  : typeof post.publishedAt === 'string'
+                  ? new Date(post.publishedAt).toLocaleDateString()
+                  : 'Invalid date'}
+              </p>
+              {typeof post.excerpt === 'string' && (
+                <p className="text-gray-700 line-clamp-3 mb-4">{post.excerpt}</p>
+              )}
+              <Link href={`/articles/${post.slug?.current ?? ''}`} className="mt-auto text-green-600 hover:underline">
                 Read more
               </Link>
             </div>

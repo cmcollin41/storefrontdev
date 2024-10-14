@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import Link from "next/link";
 import Image from "next/image";
-import { type SanityDocument } from "next-sanity";
+import { type SanityDocument } from "@sanity/client";
 import {
   Carousel,
   CarouselContent,
