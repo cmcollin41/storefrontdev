@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
 import Logo from "@/app/logo"
-import { CreditCardIcon, SettingsIcon, ShieldIcon, MenuIcon } from "lucide-react"
+import { MenuIcon } from "lucide-react"
 import Link from 'next/link'
 
 
