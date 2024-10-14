@@ -13,7 +13,7 @@ import {
   type CarouselApi
 } from "@/components/ui/carousel";
 import { Skeleton } from "@/components/ui/skeleton";
-
+import { Badge } from "@/components/ui/badge";
 import { client } from "@/sanity/lib/client";
 import imageUrlBuilder from '@sanity/image-url'
 
@@ -49,7 +49,8 @@ export default function RecentArticles({ heading = "Recent Articles", category }
           slug, 
           publishedAt, 
           excerpt,
-          mainImage
+          mainImage,
+          categories[]->
         }`;
 
         const fetchedPosts = await client.fetch<SanityDocument[]>(POSTS_QUERY, {}, { next: { revalidate: 30 } });
@@ -128,6 +129,15 @@ export default function RecentArticles({ heading = "Recent Articles", category }
                             placeholder="blur"
                             blurDataURL={urlFor(post.mainImage).width(50).quality(20).blur(50).url()}
                           />
+                          {post.categories && post.categories.length > 0 && (
+                            <div className="absolute top-2 left-2 flex flex-wrap gap-1">
+                              {post.categories.map((category: { title: string, _id: string }) => (
+                                <Badge key={category._id} className="bg-red-600 text-white text-xs">
+                                  {category.title}
+                                </Badge>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       </div>
                     )}
