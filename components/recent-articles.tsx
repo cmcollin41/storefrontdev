@@ -97,8 +97,8 @@ export default function RecentArticles({ heading = "Recent Articles", category }
   );
 
   return (
-    <section className="w-full bg-white py-8">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="w-full pb-8 pt-10">
+      <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-black tracking-wide">{heading}</h2>
           <Link href="/articles" className="text-green-700 hover:underline">VIEW ALL</Link>
@@ -116,8 +116,8 @@ export default function RecentArticles({ heading = "Recent Articles", category }
               <SkeletonLoader />
             ) : (
               posts.map((post) => (
-                <CarouselItem key={post._id} className="my-4 md:basis-1/2 lg:basis-1/4">
-                  <article className="bg-white rounded-lg shadow-md flex flex-col">
+                <CarouselItem key={post._id} className="my-4 md:basis-1/2 lg:basis-1/3">
+                  <article className="rounded-lg shadow-md flex flex-col">
                     {post.mainImage && (
                       <div className="flex justify-center flex-grow">
                         <div className="relative w-full h-[200px] overflow-hidden rounded-t-lg">

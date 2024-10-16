@@ -50,6 +50,23 @@ export const postType = defineType({
       name: 'body',
       type: 'blockContent',
     }),
+    defineField({
+      name: 'youtubeVideo',
+      title: 'YouTube Video',
+      type: 'object',
+      fields: [
+        {
+          name: 'url',
+          title: 'YouTube URL',
+          type: 'url',
+        },
+        {
+          name: 'caption',
+          title: 'Caption',
+          type: 'string',
+        },
+      ],
+    }),
   ],
   preview: {
     select: {

@@ -6,6 +6,7 @@ import { client } from "@/sanity/lib/client";
 import Link from "next/link";
 import Image from "next/image";
 import CodeBlock from "@/components/ui/code-block";
+import YouTubeEmbed from '@/components/youtube-embed';
 
 const builder = imageUrlBuilder(client);
 
@@ -48,12 +49,14 @@ export default async function PostPage({
     publishedAt,
     mainImage,
     body,
+    youtubeVideo,
     "author": author->{name, image}
   }`;
 
   let post;
   try {
-    post = await client.fetch<SanityDocument>(POST_QUERY, {}, options);
+    post = await client.fetch<any>(POST_QUERY, {}, options);
+    console.log("Post:", post);
   } catch (error) {
     console.error("Error fetching post:", error);
     return <div>Error loading post</div>;
@@ -68,7 +71,9 @@ export default async function PostPage({
       <Link href="/articles" className="text-green-700 hover:underline">
         ← back to articles
       </Link>
-      {post.mainImage && (
+      {post.youtubeVideo && post.youtubeVideo.url ? (
+        <YouTubeEmbed url={post.youtubeVideo.url} caption={post.youtubeVideo.caption} />
+      ) : post.mainImage && (
         <div className="relative w-full aspect-video">
           <Image
             src={urlFor(post.mainImage).width(800).height(450).url()}
