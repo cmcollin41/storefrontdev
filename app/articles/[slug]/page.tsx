@@ -72,9 +72,7 @@ export default async function PostPage({
   let post;
   try {
     post = await client.fetch<any>(POST_QUERY, {}, options);
-    console.log("Post:", post);
   } catch (error) {
-    console.error("Error fetching post:", error);
     return <div>Error loading post</div>;
   }
 
