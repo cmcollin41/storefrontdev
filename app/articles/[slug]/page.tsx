@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import CodeBlock from "@/components/ui/code-block";
 import YouTubeEmbed from '@/components/youtube-embed';
+import { Metadata } from 'next';
 
 const builder = imageUrlBuilder(client);
 
@@ -107,4 +108,36 @@ export default async function PostPage({
       </div>
     </main>
   );
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const { slug } = params;
+  
+  const POST_QUERY = `*[_type == "post" && slug.current == "${slug}"][0]{
+    title,
+    description,
+    mainImage
+  }`;
+
+  const post = await client.fetch<any>(POST_QUERY, {}, options);
+
+  if (!post) {
+    return {
+      title: 'Post Not Found',
+    };
+  }
+
+  return {
+    title: post.title,
+    description: post.description,
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      images: [
+        {
+          url: urlFor(post.mainImage).width(1200).height(630).url(),
+        },
+      ],
+    },
+  };
 }
